@@ -81,9 +81,11 @@ void loop()
         cam.printDebug(datapass);
           if(password=="OK"){
               digitalWrite(Solenoid, LOW);
-              String message = "Door "+String(namedoor)+" Status unlock imei"+String(IMEI);
+              String message = "Door:"+String(namedoor)+" Status:unlock IMEI:"+String(IMEI);
+              String messagelock = "Door:"+String(namedoor)+" Status:lock IMEI:"+String(IMEI);
               Line_Notify(message);
               delay(5000);
+              Line_Notify(messagelock);
               
  
             }
