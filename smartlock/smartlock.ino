@@ -74,15 +74,15 @@ void loop()
         
         String datapass = http.getString();
         String password = datapass.substring(0,2);
-        String namedoor = datapass.substring(3,12);
-        String IMEI = datapass.substring(13);
+        String namedoor = datapass.substring(3,21);
+        String IMEI = datapass.substring(28);
         //cam.printDebug(password);
         //cam.printDebug(namedoor);
         cam.printDebug(datapass);
           if(password=="OK"){
               digitalWrite(Solenoid, LOW);
-              String message = "Door:"+String(namedoor)+" Status:unlock IMEI:"+String(IMEI);
-              String messagelock = "Door:"+String(namedoor)+" Status:lock IMEI:"+String(IMEI);
+              String message = "Door:"+String(namedoor)+"\n"+" Status:unlock \n IMEI:"+String(IMEI);
+              String messagelock = "Door:"+String(namedoor)+"\n"+" Status:lock \n IMEI:"+String(IMEI);
               Line_Notify(message);
               delay(5000);
               Line_Notify(messagelock);
