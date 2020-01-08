@@ -12,10 +12,11 @@ WiFiMulti WiFiMulti;
 #define LINE_TOKEN "uWU4WEdevq9ONZtWncVODGkKYlNIgVQ14xm7ro93S2e"
 #define Solenoid 23
 #define LEDtrue 19
+#define LEDred 18
 void setup() {
   pinMode(Solenoid, OUTPUT);
   pinMode(LEDtrue, OUTPUT);
-  pinMode(18, OUTPUT);
+  pinMode(LEDred, OUTPUT);
   digitalWrite(23, HIGH);
   Serial.begin(2000000);
   Serial.println("\r\nESPino32CAM");
@@ -38,6 +39,13 @@ void setup() {
 }
 void loop()
 {
+  //digitalWrite(LEDtrue, HIGH);
+  //delay(1000);
+  //digitalWrite(LEDtrue, LOW);
+  //delay(1000);
+  //digitalWrite(LEDred, HIGH);
+  //delay(1000);
+  //digitalWrite(LEDred, LOW);
   camera_fb_t *fb = cam.capture();
   if (!fb)
   {
@@ -55,7 +63,7 @@ void loop()
      WiFiMulti.run();
      delay(1000);
   if(res.status)
-  {   digitalWrite(LEDtrue, HIGH);
+  {   
       //String qrdata = res.payload;
       cam.printDebug(res.payload);
       
@@ -80,6 +88,7 @@ void loop()
         //cam.printDebug(namedoor);
         cam.printDebug(datapass);
           if(password=="OK"){
+              digitalWrite(LEDtrue, HIGH);
               digitalWrite(Solenoid, LOW);
               String message = "Door:"+String(namedoor)+"\n"+" Status:unlock \n IMEI:"+String(IMEI);
               String messagelock = "Door:"+String(namedoor)+"\n"+" Status:lock \n IMEI:"+String(IMEI);
@@ -90,22 +99,29 @@ void loop()
  
             }
            else{
-              digitalWrite(LEDtrue, LOW);
+              //digitalWrite(LEDtrue, LOW);
+              digitalWrite(LEDred, HIGH);
             
             }
         
       } else {
+          digitalWrite(LEDred, HIGH);
           Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
         }
-      http.end();
-    }
+        
+        http.end();
+    } else{
+      
+        digitalWrite(LEDred, HIGH);
+      }
+    
        
   }
   else{
       
       digitalWrite(LEDtrue, LOW);
       digitalWrite(Solenoid, HIGH);
-      
+      digitalWrite(LEDred, LOW);
       
     }
  
