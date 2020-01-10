@@ -94,7 +94,11 @@ void loop()
               String messagelock = "Door:"+String(namedoor)+"\n"+" Status:lock \n IMEI:"+String(IMEI);
               Line_Notify(message);
               delay(5000);
+              digitalWrite(Solenoid, HIGH);
               Line_Notify(messagelock);
+              status();
+              
+              
               
  
             }
@@ -118,9 +122,7 @@ void loop()
        
   }
   else{
-      
       digitalWrite(LEDtrue, LOW);
-      digitalWrite(Solenoid, HIGH);
       digitalWrite(LEDred, LOW);
       
     }
@@ -128,6 +130,28 @@ void loop()
   cam.clearMemory(image_rgb);  
 }
 }
+void status(){
+  if ((WiFiMulti.run() == WL_CONNECTED)) {
+    
+    HTTPClient http2;
+    
+    String url2 = "http://iot.rmu.ac.th/iot/Smartlock/NEtpie.php?status=UnLock";
+    cam.printDebug(url2);
+    http2.begin(url2); //HTTP
+
+int httpCode2 = http2.GET();
+if (httpCode2 > 0) {
+  Serial.printf("[HTTP] GET... code: %d\n", httpCode2);
+if (httpCode2 == HTTP_CODE_OK) {
+  String payload = http2.getString();
+  cam.printDebug(payload);
+}
+} else {
+  Serial.printf("[HTTP] GET... failed, error: %s\n", http2.errorToString(httpCode2).c_str());
+}
+  http2.end();
+}
+  }
 void Line_Notify(String message) {
  WiFiClientSecure client; // กรณีขึ้น Error ให้ลบ axTLS:: ข้างหน้าทิ้ง
 
