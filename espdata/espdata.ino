@@ -8,8 +8,11 @@ const char* password = "20102553";
 #define APPID   "WorkShopLED"
 #define KEY     "tjVAVjlbJHII6nq"
 #define SECRET  "MgBnXJHN74Lm6ISZ3m3oogCSO" 
-
+#include <ESP8266WiFiMulti.h>
 #define ALIAS   "smartlock"
+ESP8266WiFiMulti WiFiMulti;
+#include <ESP8266HTTPClient.h>
+#include <Arduino.h>
 
 WiFiClient client;
 
@@ -54,17 +57,34 @@ void setup(){
 }
 
 void loop(){
-    if (microgear.connected()) {
+
+  
+  if ((WiFiMulti.run() == WL_CONNECTED)) {
+    
+    HTTPClient http;
+    
+    String url = "http://iot.rmu.ac.th/iot/Smartlock/NEtpie.php";
+    Serial.println(url);
+    http.begin(url); //HTTP
+
+int httpCode = http.GET();
+if (httpCode > 0) {
+  Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+if (httpCode == HTTP_CODE_OK) {
+  String payload = http.getString();
+  Serial.println(payload);
+
+   if (microgear.connected()) {
         Serial.println("connected");
         microgear.loop();
 
         if (timer >= 1000) {
        
-        String a = "dfsadfsa,nkjdsnfids";
+        //String a = "dfsadfsa,nkjdsnfids";
 
             Serial.print("Sending -->");
-            Serial.print(a);
-            microgear.publish("/door",String(a));
+            Serial.print(payload);
+            microgear.publish("/door",String(payload));
 
             timer = 0;
         } 
@@ -80,3 +100,13 @@ else timer += 100;
     }
     delay(100);
 }
+
+} else {
+  Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+}
+  http.end();
+}
+}
+
+  
+   
