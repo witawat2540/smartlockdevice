@@ -91,12 +91,14 @@ void loop()
               digitalWrite(LEDtrue, HIGH);
               digitalWrite(Solenoid, LOW);
               String message = "Door:"+String(namedoor)+"\n"+" Status:unlock \n IMEI:"+String(IMEI);
+              status("Unlock");
               String messagelock = "Door:"+String(namedoor)+"\n"+" Status:lock \n IMEI:"+String(IMEI);
               Line_Notify(message);
               delay(5000);
               digitalWrite(Solenoid, HIGH);
               Line_Notify(messagelock);
-              status();
+              status("lock");
+              
               
               
               
@@ -130,12 +132,12 @@ void loop()
   cam.clearMemory(image_rgb);  
 }
 }
-void status(){
+void status(String data){
   if ((WiFiMulti.run() == WL_CONNECTED)) {
     
     HTTPClient http2;
     
-    String url2 = "http://iot.rmu.ac.th/iot/Smartlock/NEtpie.php?status=UnLock";
+    String url2 = "http://iot.rmu.ac.th/iot/Smartlock/send_esp8266.php?status="+String(data);
     cam.printDebug(url2);
     http2.begin(url2); //HTTP
 
