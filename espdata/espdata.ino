@@ -83,8 +83,11 @@ if (httpCode == HTTP_CODE_OK) {
         //String a = "dfsadfsa,nkjdsnfids";
 
             Serial.print("Sending -->");
+            
+            
+            //String data = String(payload)+","+String(stat);
             Serial.print(payload);
-            microgear.publish("/door",String(payload));
+            microgear.publish("/door",String(stat));
 
             timer = 0;
         } 
@@ -107,6 +110,7 @@ else timer += 100;
   http.end();
 }
 }
+
 
   
    
