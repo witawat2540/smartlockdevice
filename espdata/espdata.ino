@@ -132,12 +132,12 @@ void status() {
         Serial.println(status);
         if (status == "Unlock") {
 
-          microgear.writeFeed("smartlock", "door123/1[Sister room]:1", "cqyqmXB6TV4z3QD8z855gZlQFivPyeQf");
+          microgear.writeFeed("smartlock", "doorid1:1", "cqyqmXB6TV4z3QD8z855gZlQFivPyeQf");
+          delay(5000);
+          microgear.writeFeed("smartlock", "doorid1:0", "cqyqmXB6TV4z3QD8z855gZlQFivPyeQf");
+          
         }
-        if (status == "lock") {
-
-          microgear.writeFeed("smartlock", "door123/1[Sister room]:0" + String(iddoor), "cqyqmXB6TV4z3QD8z855gZlQFivPyeQf");
-        }
+        
 
       }
     } else {
