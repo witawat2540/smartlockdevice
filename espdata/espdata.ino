@@ -86,9 +86,10 @@ if (httpCode == HTTP_CODE_OK) {
             
             
             //String data = String(payload)+","+String(stat);
-            Serial.print(payload);
-            microgear.publish("/door",String(stat));
-
+            //String Status = payload.substring(83);
+            Serial.println(payload);
+            microgear.publish("/door",String(payload));
+            status();
             timer = 0;
         } 
 else timer += 100;
@@ -110,6 +111,37 @@ else timer += 100;
   http.end();
 }
 }
+void status(){
+  if ((WiFiMulti.run() == WL_CONNECTED)) {
+    
+    HTTPClient http2;
+    
+    String url2 = "http://iot.rmu.ac.th/iot/Smartlock/status.php";
+    //cam.printDebug(url2);
+    http2.begin(url2); //HTTP
+
+int httpCode2 = http2.GET();
+if (httpCode2 > 0) {
+  Serial.printf("[HTTP] GET... code: %d\n", httpCode2);
+if (httpCode2 == HTTP_CODE_OK) {
+  String payload2 = http2.getString();
+  String iddoor = payload2.substring(0,1);
+  String status = payload2.substring(1);
+  //cam.printDebug(payload);
+  Serial.println(iddoor);
+  Serial.println(status);
+  if(status=="Unlock"){
+                    
+      microgear.writeFeed("smartlock","iddoor:"+String(iddoor),"cqyqmXB6TV4z3QD8z855gZlQFivPyeQf");
+   }
+  
+}
+} else {
+  Serial.printf("[HTTP] GET... failed, error: %s\n", http2.errorToString(httpCode2).c_str());
+}
+  http2.end();
+}
+  }
 
 
   
