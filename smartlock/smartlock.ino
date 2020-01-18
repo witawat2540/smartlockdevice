@@ -83,8 +83,8 @@ void loop()
         String datapass = http.getString();
         String password = datapass.substring(0,2);
         String namedoor = datapass.substring(3,21);
-        String IMEI = datapass.substring(28);
-        //cam.printDebug(password);
+        String IMEI = datapass.substring(21);
+        cam.printDebug(IMEI);
         //cam.printDebug(namedoor);
         cam.printDebug(datapass);
           if(password=="OK"){
