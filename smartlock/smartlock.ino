@@ -13,10 +13,13 @@ WiFiMulti WiFiMulti;
 #define Solenoid 23
 #define LEDtrue 19
 #define LEDred 18
+int buttonPin = 05;
+int buttonState = 0;
 void setup() {
   pinMode(Solenoid, OUTPUT);
   pinMode(LEDtrue, OUTPUT);
   pinMode(LEDred, OUTPUT);
+  pinMode(buttonPin, INPUT_PULLUP);
   digitalWrite(23, HIGH);
   Serial.begin(2000000);
   Serial.println("\r\nESPino32CAM");
@@ -39,6 +42,7 @@ void setup() {
 }
 void loop()
 {
+ 
   //digitalWrite(LEDtrue, HIGH);
   //delay(1000);
   //digitalWrite(LEDtrue, LOW);
@@ -58,10 +62,21 @@ void loop()
   {
      cam.clearMemory(fb);
     
+      buttonState = digitalRead(buttonPin);
+  if (buttonState == 0) {
+    // turn LED on
+    digitalWrite(Solenoid, LOW);
+    delay(5000);
+    digitalWrite(Solenoid, HIGH);
+  } else {
+    // turn LED off
+    digitalWrite(Solenoid, HIGH);
+  }
      cam.printDebug("\r\nQR Read:");
      qrResoult res = qr.recognition(image_rgb);
      WiFiMulti.run();
      delay(1000);
+     
   if(res.status)
   {   
       //String qrdata = res.payload;
