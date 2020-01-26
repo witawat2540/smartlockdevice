@@ -9,7 +9,7 @@ ESPino32QRCode qr;
 #include <WiFiMulti.h>
 WiFiMulti WiFiMulti;
 #define BUTTON_QR 0
-#define LINE_TOKEN "uWU4WEdevq9ONZtWncVODGkKYlNIgVQ14xm7ro93S2e"
+#define LINE_TOKEN "4vSA4BZpJgiXd2OrMzuy7BQdI5LGN7aFBcEoc1FhSYE"
 #define Solenoid 23
 #define LEDtrue 19
 #define LEDred 18
@@ -37,7 +37,7 @@ void setup() {
     Serial.flush();
     delay(500);
   }
-  WiFiMulti.addAP("Witawatd", "20102553"); // ssid , password
+  WiFiMulti.addAP("Witawatdwifi", "20102553"); // ssid , password
   randomSeed(50);
 }
 void loop()
@@ -97,7 +97,7 @@ void loop()
         
         String datapass = http.getString();
         String password = datapass.substring(0,2);
-        String namedoor = datapass.substring(3,21);
+        String namedoor = datapass.substring(2,21);
         String IMEI = datapass.substring(21);
         cam.printDebug(IMEI);
         //cam.printDebug(namedoor);

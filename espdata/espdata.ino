@@ -2,7 +2,7 @@
 #include <ESP8266WiFi.h>
 #include <MicroGear.h>
 
-const char* ssid     = "Witawatd";
+const char* ssid     = "Witawatdwifi";
 const char* password = "20102553";
 
 #define APPID   "WorkShopLED"
@@ -128,7 +128,6 @@ void status() {
         String iddoor = payload2.substring(0, 1);
         String status = payload2.substring(1);
         //cam.printDebug(payload);
-        Serial.println(iddoor);
         Serial.println(status);
         if (status == "Unlock") {
 
