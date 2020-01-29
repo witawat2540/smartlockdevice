@@ -5,9 +5,9 @@
 const char* ssid     = "Witawatdwifi";
 const char* password = "20102553";
 
-#define APPID   "WorkShopLED"
-#define KEY     "tjVAVjlbJHII6nq"
-#define SECRET  "MgBnXJHN74Lm6ISZ3m3oogCSO"
+#define APPID   "RACs"
+#define KEY     "IBRS1ykdb4NLUB8"
+#define SECRET  "7fz464SO62VtZ3fbRnUd51Zxv"
 #include <ESP8266WiFiMulti.h>
 #define ALIAS   "smartlock"
 ESP8266WiFiMulti WiFiMulti;

@@ -105,14 +105,14 @@ void loop()
           if(password=="OK"){
               digitalWrite(LEDtrue, HIGH);
               digitalWrite(Solenoid, LOW);
-              String message = "Door:"+String(namedoor)+"\n"+" Status:unlock \n IMEI:"+String(IMEI);
+              String message = "[Residental Access Control Systems]\n> Door: "+String(namedoor)+"\n"+"> Status: Unlock\n>IMEI: "+String(IMEI);
               status("Unlock");
-              String messagelock = "Door:"+String(namedoor)+"\n"+" Status:lock \n IMEI:"+String(IMEI);
+              String messagelock = "[Residental Access Control Systems]\n> Door: "+String(namedoor)+"\n"+"> Status: Lock \n> IMEI: "+String(IMEI);
               Line_Notify(message);
               delay(5000);
               digitalWrite(Solenoid, HIGH);
               Line_Notify(messagelock);
-              status("lock");
+              status("Lock");
               
               
               
